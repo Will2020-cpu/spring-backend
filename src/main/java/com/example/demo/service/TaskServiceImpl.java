@@ -25,8 +25,20 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Task editTask(Long id, Task task) {
-        return null;
+    public Task editTask(Task taskUpdate) {
+        Long num = taskUpdate.getId();
+        if(taskRepo.findById(num).isPresent()){
+            Task taskToUpdate =  new Task();
+            taskToUpdate.setId(taskUpdate.getId());
+            taskToUpdate.setTitle(taskUpdate.getTitle());
+            taskToUpdate.setStatus(taskUpdate.getStatus());
+            taskToUpdate.setPriority(taskUpdate.getPriority());
+            taskToUpdate.setCreated_at(taskUpdate.getCreated_at());
+            taskToUpdate.setUpdate_at(taskUpdate.getUpdate_at());
+            taskRepo.save(taskToUpdate);
+            return taskToUpdate;
+        }
+        return  null;
     }
 
     @Override

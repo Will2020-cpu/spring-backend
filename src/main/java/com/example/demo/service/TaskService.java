@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface TaskService {
     Task saveTask(Task task);
-    Task editTask(Long id, Task task);
+    Task editTask(Task taskUpdate);
     List<Task> getTasks();
 }

@@ -7,10 +7,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -27,4 +27,15 @@ public class TaskResource {
         return ResponseEntity.ok(taskService.getTasks());
     }
 
+    @PostMapping("/task/add")
+    public ResponseEntity<Task> saveTask(@RequestBody Task task){
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/task/add").toUriString());
+        return ResponseEntity.created(uri).body(taskService.saveTask(task));
+    }
+
+    @PutMapping("/task/edit/{id}")
+    public ResponseEntity<Task> editTask(@RequestBody Task taskUpdate){
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/task/edit/{id}").toUriString());
+        return ResponseEntity.created(uri).body(taskService.editTask(taskUpdate));
+    }
 }
